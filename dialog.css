@@ -4,16 +4,48 @@ body {
   }
   
   #close-button {
-    display: inline-block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
     margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
   }
   
   #close-button:hover {
     background-color: #0056b3;
   }
+
+  .row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+.heading{
+  width: 100%;
+  color : black;
+  font-size: 25px;
+  text-align: center;
+  height: 30px;
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+}
+
+.options{
+  display: flex;
+  flex-direction: column;
+}
+
+img{
+  margin: 4px;
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
   
