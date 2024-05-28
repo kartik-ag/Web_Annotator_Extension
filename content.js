@@ -3,18 +3,22 @@ if (!document.getElementById('my-dialog')) {
     // Create the dialog container
 const dialog = document.createElement('div');
 dialog.id = 'my-dialog';
-dialog.style.position = 'fixed';
-dialog.style.top = '10px'; // Adjust as needed
-dialog.style.right = '10px'; // Adjust as needed
-// dialog.style.width = '130px'; // Adjust as needed
-dialog.style.height = '550px'; // Adjust as needed
-dialog.style.zIndex = '10000'; // Ensure it's on top
-dialog.style.backgroundColor = 'rgba(240,240,240,255)';
-dialog.style.border = '1px solid black';
-dialog.style.padding = '20px';
-dialog.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-dialog.style.borderRadius = '5px';
-dialog.style.cursor = "move";
+dialog.style.cssText = `
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 173px !important;
+    height: 710px !important;
+    z-index: 10000;
+    background-color: rgba(240,240,240,255);
+    border: 1px solid black;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 5px;
+    cursor: move;
+    font-size: 16px; /* Set the font size */
+    color: black; /* Set the text color */
+  `;
 
 let mouseDown = false;
 let offsetX, offsetY;

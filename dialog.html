@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Document</title>
+    <link rel="stylesheet" href="dialog.css">
 </head>
-<body>
-    <div class="toolbox">
-        <div class="toolbox-header">
-          <h1>Paint</h1>
-          <button id="exit">Exit</button>
+<div id="body">
+    <div class="unique-toolbox">
+        <div class="unique-toolbox-header">
+          <div class="paint">Paint</div>
+          <button id="unique-exit">Exit</button>
         </div>
-        <div class="toolbox-content-1">
-          <button><img src="arrow.png" alt="Arrow"></button>
-          <button><img src="text.png" alt="Text"></button>
-          <button><img src="picker.png" alt=""></button>
-          <button><img src="fill.png" alt="Fill"></button>
-          <button><img src="pen.png" alt="Pencil"></button>
-          <button><img src="eraser.png" alt="Eraser"></button>
-          <button><img src="line1.png" alt="Line"></button>
-          <button><img src="line2.png" alt="Curve"></button>
-          <button><img src="line3.png" alt="Curve"></button>
-          <button><img src="poly1.png" alt="Rectangle"></button>
-          <button><img src="poly2.png" alt="Circle"></button>
-          <button><img src="poly3.png" alt="Circle"></button>
+        <div class="unique-toolbox-content-1">
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="arrow.png" alt="Arrow"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="text.png" alt="Text"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="picker.png" alt=""></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="fill.png" alt="Fill"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="pen.png" alt="Pencil"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="eraser.png" alt="Eraser"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="line1.png" alt="Line"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="line2.png" alt="Curve"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="line3.png" alt="Curve"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="poly1.png" alt="Rectangle"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="poly2.png" alt="Circle"></button>
+          <button class="my-unique-button" onclick="handleOnClickUnique(this)"><img class="my-unique-image" src="poly3.png" alt="Circle"></button>
         </div>
-        <div class="toolbox-content">
-            <div class="color-picker-heading">Color</div>
-          <div class="color-picker"></div>
-          <div class="transparancy">
+        <div class="unique-toolbox-content">
+            <div class="unique-color-picker-heading">Color</div>
+          <div class="unique-color-picker"></div>
+          <div class="unique-transparancy">
             Transparancy
           </div>
-          <div class="slider">
-            <input type="range" min="0" max="100" value="50" class="slider-input">
+          <div class="unique-slider">
+            <input type="range" min="0" max="100" value="50" class="unique-slider-input">
           </div>
-          <div class="value">40%</div>
-          <div class="size">
+          <div class="unique-value">40%</div>
+          <div class="unique-size">
             Size
           </div>
-          <div class="slider">
-            <input type="range" min="0" max="100" value="50" class="slider-input">
+          <div class="unique-slider">
+            <input type="range" min="0" max="100" value="50" class="unique-slider-input">
           </div>
-          <div class="value">55%</div>
-          <div class="controls">
+          <div class="unique-value">55%</div>
+          <div class="unique-controls">
             <button><img src="del.png" alt="Trash"></button>
             <button><img src="back.png" alt="Target"></button>
             <button><img src="next.png" alt="Eye"></button>
           </div>
         </div>
       </div>
-</body>
+    </div>
 </html>

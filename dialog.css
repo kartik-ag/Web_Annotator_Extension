@@ -1,61 +1,66 @@
-body {
+#body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
 
-.toolbox {
+.unique-toolbox {
   background-color: #f0f0f0;
   padding: 10px;
-  width: 150px;
-  height: 550px;
+  width: 150px !important;
+  height: 680px !important;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.toolbox-header {
+.unique-toolbox-header {
   display: flex;
   justify-content: space-between;
-  width: 110%;
+  width: 110% !important;
   background-color: #ccc;
   position: relative;
   top: -10px;
   font-size: 10px;
   margin-bottom: 0px;
   padding: 2px 3px;
-
 }
 
-.toolbox-header h1 {
+.unique-toolbox-header h1 {
   margin: 0;
 }
 
-.toolbox-header button {
+.unique-toolbox-header button {
   background-color: #ccc;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
 }
 
-.toolbox-content {
+.paint{
+  font-size: 15px;
+  font-weight: 700;
+  align-content: center;
+}
+
+.unique-toolbox-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 }
-.toolbox-content-1 button{
-  border : none;
+.unique-toolbox-content-1 button {
+  border: none;
   height: auto;
   width: auto;
 }
-.toolbox-content-1 {
+.unique-toolbox-content-1 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   margin-top: -15px;
 }
 
-.toolbox-content button {
+.unique-toolbox-content button {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 5px 10px;
@@ -63,12 +68,12 @@ body {
   cursor: pointer;
 }
 
-.toolbox-content button img {
+.unique-toolbox-content button img {
   width: 20px;
   height: 20px;
 }
 
-.toolbox-content .color-picker {
+.unique-toolbox-content .unique-color-picker {
   width: 100%;
   height: 30px;
   background-color: #ddd;
@@ -76,7 +81,7 @@ body {
   margin: 5px;
 }
 
-.toolbox-content .slider {
+.unique-toolbox-content .unique-slider {
   width: 100%;
   height: 10px;
   background-color: #eee;
@@ -85,7 +90,7 @@ body {
   margin: 5px;
 }
 
-.toolbox-content .slider .handle {
+.unique-toolbox-content .unique-slider .unique-handle {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -96,43 +101,49 @@ body {
   cursor: pointer;
 }
 
-.toolbox-content .slider .handle.active {
+.unique-toolbox-content .unique-slider .unique-handle.active {
   background-color: #007bff;
 }
 
-.toolbox-content .value {
+.unique-toolbox-content .unique-value {
   margin-top: 10px;
 }
 
-.toolbox-content .controls {
+.unique-toolbox-content .unique-controls {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  margin-top: 10px;
 }
 
-.toolbox-content .controls button {
+.unique-toolbox-content .unique-controls button {
   width: 30px;
   height: 30px;
-  /* background-color: #ccc; */
   border: none;
-  /* border-radius: 50%; */
   cursor: pointer;
   padding: 0px;
 }
 
-.toolbox-content .controls button img {
+.unique-toolbox-content .unique-controls button img {
   width: 30px;
   height: 30px;
 }
 
-.transparancy{
+.unique-transparancy {
   font-weight: 700;
   font-size: 17px;
   margin-top: 10px;
 }
-.size{
+
+.unique-size {
   font-weight: 700;
   font-size: 17px;
   margin-top: 10px;
+}
+
+.my-unique-image{
+  border-radius: 50%;
+}
+
+.selected{
+  background-color: black;
 }
