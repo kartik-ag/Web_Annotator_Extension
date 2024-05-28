@@ -17,7 +17,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["content.js", "dialog.html", "dialog.css", "dialog.js","arrow.png","back.png","del.png","eraser.png","fill.png","line1.png","line2.png","next.png","pen.png","poly1.png","poly2.png","poly3.png","text.png"],
+      "resources": ["content.js", "dialog.html", "dialog.css", "dialog.js","arrow.png","back.png","del.png","eraser.png","fill.png","line1.png","line2.png","line3.png","next.png","pen.png","picker.png","poly1.png","poly2.png","poly3.png","text.png"],
       "matches": ["<all_urls>"]
     }
   ]

@@ -1,43 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dialog</title>
+    <title>Document</title>
 </head>
 <body>
-  <div class="heading">
-    Options
-  </div>
-  <div class="options">
-    <div class="row">
-      <img src="arrow.png" alt="1">
-    <img src="text.png" alt="13">
-    </div>
-    <div class="row">
-      <img src="pen.png" alt="9">
-    <img src="eraser.png" alt="4">
-    </div>
-    <div class="row">
-      <img src="fill.png" alt="5">
-    <img src="line1.png" alt="6">
-    </div>
-    <div class="row">
-      <img src="line2.png" alt="7">
-    <img src="poly1.png" alt="10">
-    </div>
-    <div class="row">
-      <img src="poly2.png" alt=" 11">
-    <img src="poly3.png" alt="12">
-    </div>
-    <div class="row">
-      <img src="back.png" alt="2">
-    <img src="next.png" alt="8">
-    </div>
-    <div class="row">
-      <img src="del.png" alt="3">
-    </div>
-  </div>
-  <!-- <h1>Extension Dialog</h1>
-  <p>This is a dialog box injected by the extension.</p> -->
-  <button id="close-button">Close</button>
+    <div class="toolbox">
+        <div class="toolbox-header">
+          <h1>Paint</h1>
+          <button id="exit">Exit</button>
+        </div>
+        <div class="toolbox-content-1">
+          <button><img src="arrow.png" alt="Arrow"></button>
+          <button><img src="text.png" alt="Text"></button>
+          <button><img src="picker.png" alt=""></button>
+          <button><img src="fill.png" alt="Fill"></button>
+          <button><img src="pen.png" alt="Pencil"></button>
+          <button><img src="eraser.png" alt="Eraser"></button>
+          <button><img src="line1.png" alt="Line"></button>
+          <button><img src="line2.png" alt="Curve"></button>
+          <button><img src="line3.png" alt="Curve"></button>
+          <button><img src="poly1.png" alt="Rectangle"></button>
+          <button><img src="poly2.png" alt="Circle"></button>
+          <button><img src="poly3.png" alt="Circle"></button>
+        </div>
+        <div class="toolbox-content">
+            <div class="color-picker-heading">Color</div>
+          <div class="color-picker"></div>
+          <div class="transparancy">
+            Transparancy
+          </div>
+          <div class="slider">
+            <input type="range" min="0" max="100" value="50" class="slider-input">
+          </div>
+          <div class="value">40%</div>
+          <div class="size">
+            Size
+          </div>
+          <div class="slider">
+            <input type="range" min="0" max="100" value="50" class="slider-input">
+          </div>
+          <div class="value">55%</div>
+          <div class="controls">
+            <button><img src="del.png" alt="Trash"></button>
+            <button><img src="back.png" alt="Target"></button>
+            <button><img src="next.png" alt="Eye"></button>
+          </div>
+        </div>
+      </div>
 </body>
 </html>

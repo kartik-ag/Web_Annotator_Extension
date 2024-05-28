@@ -1,5 +1,11 @@
-document.getElementById('close-button').addEventListener('click', () => {
-  const dialog = document.getElementById('my-dialog');
-  dialog.parentNode.removeChild(dialog);
+function setupSliders() {
+  let sliders = document.querySelectorAll('.slider-input');
+  let values = document.querySelectorAll('.value');
+  sliders.forEach((slider, index) => {
+    slider.addEventListener('input', (e) => {
+      values[index].textContent = e.target.value + '%';
+    });
   });
-  
+}
+
+setupSliders();
