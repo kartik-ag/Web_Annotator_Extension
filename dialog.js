@@ -9,7 +9,7 @@ function setupSliders() {
 }
 
 setupSliders();
-
+ 
 // Function to create the overlay canvas and handle drawing
 function activatePencilTool() {
   // Check if the overlay canvas already exists
@@ -25,6 +25,7 @@ function activatePencilTool() {
     canvas.style.zIndex = '9999';
     canvas.style.pointerEvents = 'auto'; // Ensure the canvas captures mouse events
     document.body.appendChild(canvas);
+
 
     const ctx = canvas.getContext('2d');
     resizeCanvas(canvas, ctx);
@@ -58,16 +59,12 @@ function activatePencilTool() {
     canvas.addEventListener('mouseup', endPosition);
     canvas.addEventListener('mousemove', draw);
 
-    // Add cleanup logic when exiting the panel or switching tools
-    document.getElementById('unique-exit').addEventListener('click', () => {
-      const dialog = document.getElementById('unique-dialog');
-      dialog.innerHTML = "";
-      dialog.parentNode.removeChild(dialog);
-      document.body.removeChild(canvas);
-    });
-
     // Resize canvas when window is resized
     window.addEventListener('resize', () => resizeCanvas(canvas, ctx));
+  }
+  else{
+    // Close the canvas if it already exists
+    closeCanvas();
   }
 }
 
@@ -84,16 +81,41 @@ document.querySelector('button img[alt="Pencil"]').parentElement.addEventListene
 //handling button click
 function handleOnClickUnique(clickedButton) {
   const buttons = document.querySelectorAll('.my-unique-button');
-  console.log(buttons);
+  // console.log(buttons);
 
+  // Check if the clicked button is the pen button
+  const isPenButton = clickedButton.classList.contains('pen-button');
+
+
+  // Check if the clicked button is already selected
+  const isSelected = clickedButton.classList.contains('selected');
+
+  // console.log("isPenButton: ", isPenButton, " isSelected: ", isSelected);
   // Remove 'selected' class from all buttons
   buttons.forEach(button => {
       button.classList.remove('selected');
   });
 
+  // // Close canvas if the clicked button is not the pen button or if it's the pen button and already selected
+  if ((!isPenButton && !isSelected)) {
+      closeCanvas();
+  }
+
   // Add 'selected' class to the clicked button
-  clickedButton.classList.add('selected');
+  if (!isSelected) {
+      clickedButton.classList.add('selected');
+  }
+  else{
+    clickedButton.classList.remove('selected');
+  }
 }
+
+function closeCanvas() {
+  if (document.getElementById('unique-overlayCanvas')) {
+    document.getElementById('unique-overlayCanvas').remove();
+  }
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const buttons = document.querySelectorAll('.my-unique-button');
@@ -105,3 +127,4 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
+
