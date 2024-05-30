@@ -16,6 +16,7 @@ setupSliders();
 function handleOnClickUnique(clickedButton) {
   const buttons = document.querySelectorAll('.my-unique-button');
   const isSelected = clickedButton.classList.contains('selected');
+  const isArrow = clickedButton.classList.contains('my-arrow');
   buttons.forEach(button => {
       button.classList.remove('selected');
   });
@@ -24,6 +25,12 @@ function handleOnClickUnique(clickedButton) {
   }
   else{
     clickedButton.classList.remove('selected');
+  }
+  if (isArrow && !isSelected) {
+    document.getElementById('my-canvas').style.display = 'none';
+  }
+  if (isArrow && isSelected) {
+    document.getElementById('my-canvas').style.display = 'block';
   }
 }
 
