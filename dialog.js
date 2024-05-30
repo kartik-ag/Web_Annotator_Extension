@@ -17,6 +17,7 @@ function handleOnClickUnique(clickedButton) {
   const buttons = document.querySelectorAll('.my-unique-button');
   const isSelected = clickedButton.classList.contains('selected');
   const isArrow = clickedButton.classList.contains('my-arrow');
+  const isLine = clickedButton.classList.contains('my-line');
   buttons.forEach(button => {
       button.classList.remove('selected');
   });
@@ -32,8 +33,16 @@ function handleOnClickUnique(clickedButton) {
   if (isArrow && isSelected) {
     document.getElementById('my-canvas').style.display = 'block';
   }
+  if (isLine && !isSelected) {
+    activateLineTool();
+  }
+  if (isLine && isSelected) {
+    deactivateLineTool();
+  }
+  if (!isLine){
+    deactivateLineTool();
+  }
 }
-
 
 
 
@@ -47,4 +56,56 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 });
+
+
+//line drawing
+if (typeof mousedownHandler === 'undefined') {
+  var mousedownHandler;
+}
+
+if (typeof mouseupHandler === 'undefined') {
+  var mouseupHandler;
+}
+function activateLineTool() {
+  const canvas = document.getElementById('my-canvas');
+  const ctx = canvas.getContext('2d');
+  let startX;
+  let startY;
+  let isDrawing = false;
+
+  mousedownHandler = (e) => {
+    isDrawing = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    canvas.style.cursor = 'crosshair';
+  };
+
+  mouseupHandler = (e) => {
+    if (isDrawing) {
+      drawLine(ctx, startX, startY, e.clientX, e.clientY);
+      isDrawing = false;
+      canvas.style.cursor = 'default';
+    }
+  };
+  canvas.addEventListener('mousedown', mousedownHandler);
+  canvas.addEventListener('mouseup', mouseupHandler);
+  
+}
+
+function deactivateLineTool() {
+  const canvas = document.getElementById('my-canvas');
+  //remove all event listeners
+  canvas.removeEventListener('mousedown', mousedownHandler);
+  canvas.removeEventListener('mouseup', mouseupHandler);
+  console.log('deactivated');
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+
+function drawLine(ctx, x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+}
 
