@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', function() {
+  setupSliders();
+  setupButtonHandlers();
+});
+
 function setupSliders() {
   let sliders = document.querySelectorAll('.unique-slider-input');
   let values = document.querySelectorAll('.unique-value');
@@ -8,23 +13,29 @@ function setupSliders() {
   });
 }
 
-setupSliders();
- 
+function setupButtonHandlers() {
+  const buttons = document.querySelectorAll('.my-unique-button');
 
+  // Add click event listener to each button
+  buttons.forEach(button => {
+    button.addEventListener('click', function() {
+      handleOnClickUnique(button);
+    });
+  });
+}
 
-//handling button click
 function handleOnClickUnique(clickedButton) {
   const buttons = document.querySelectorAll('.my-unique-button');
   const isSelected = clickedButton.classList.contains('selected');
   const isArrow = clickedButton.classList.contains('my-arrow');
   const isLine = clickedButton.classList.contains('my-line');
+  const isPen = clickedButton.classList.contains('my-pen');
   buttons.forEach(button => {
-      button.classList.remove('selected');
+    button.classList.remove('selected');
   });
   if (!isSelected) {
-      clickedButton.classList.add('selected');
-  }
-  else{
+    clickedButton.classList.add('selected');
+  } else {
     clickedButton.classList.remove('selected');
   }
   if (isArrow && !isSelected) {
@@ -39,33 +50,17 @@ function handleOnClickUnique(clickedButton) {
   if (isLine && isSelected) {
     deactivateLineTool();
   }
-  if (!isLine){
+  if (!isLine) {
     deactivateLineTool();
+  }
+  if (isPen && !isSelected) {
+    activatePenTool();
+  }
+  if ((isPen && isSelected) || (!isPen)) {
+    deactivatePenTool();
   }
 }
 
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  const buttons = document.querySelectorAll('.my-unique-button');
-
-  // Add click event listener to each button
-  buttons.forEach(button => {
-      button.addEventListener('click', function() {
-          handleOnClickUnique(button);
-      });
-  });
-});
-
-
-//line drawing
-if (typeof mousedownHandler === 'undefined') {
-  var mousedownHandler;
-}
-
-if (typeof mouseupHandler === 'undefined') {
-  var mouseupHandler;
-}
 function activateLineTool() {
   const canvas = document.getElementById('my-canvas');
   const ctx = canvas.getContext('2d');
@@ -89,18 +84,51 @@ function activateLineTool() {
   };
   canvas.addEventListener('mousedown', mousedownHandler);
   canvas.addEventListener('mouseup', mouseupHandler);
-  
 }
 
 function deactivateLineTool() {
   const canvas = document.getElementById('my-canvas');
-  //remove all event listeners
   canvas.removeEventListener('mousedown', mousedownHandler);
   canvas.removeEventListener('mouseup', mouseupHandler);
-  console.log('deactivated');
-  // ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function activatePenTool() {
+  const canvas = document.getElementById('my-canvas');
+  const ctx = canvas.getContext('2d');
+  let startX;
+  let startY;
+  let isDrawing = false;
+
+  PendownHandler = (e) => {
+    isDrawing = true;
+    startX = e.clientX;
+    startY = e.clientY;
+  };
+
+  PenmoveHandler = (e) => {
+    if (isDrawing) {
+      drawLine(ctx, startX, startY, e.clientX, e.clientY);
+      startX = e.clientX;
+      startY = e.clientY;
+    }
+  };
+
+  PenupHandler = (e) => {
+    if (isDrawing) {
+      isDrawing = false;
+    }
+  };
+  canvas.addEventListener('mousedown', PendownHandler);
+  canvas.addEventListener('mouseup', PenupHandler);
+  canvas.addEventListener('mousemove', PenmoveHandler);
+}
+
+function deactivatePenTool() {
+  const canvas = document.getElementById('my-canvas');
+  canvas.removeEventListener('mousedown', PendownHandler);
+  canvas.removeEventListener('mouseup', PenupHandler);
+  canvas.removeEventListener('mousemove', PenmoveHandler);
+}
 
 function drawLine(ctx, x1, y1, x2, y2) {
   ctx.beginPath();
@@ -108,4 +136,3 @@ function drawLine(ctx, x1, y1, x2, y2) {
   ctx.lineTo(x2, y2);
   ctx.stroke();
 }
-
