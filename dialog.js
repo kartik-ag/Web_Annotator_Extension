@@ -31,6 +31,10 @@ function handleOnClickUnique(clickedButton) {
   const isLine = clickedButton.classList.contains('my-line');
   const isPen = clickedButton.classList.contains('my-pen');
   const isErase = clickedButton.classList.contains('my-erase');
+  const isRect = clickedButton.classList.contains('my-rect');
+  const isCircle = clickedButton.classList.contains('my-circle');
+  const isText = clickedButton.classList.contains('my-text');
+  const isPolygon = clickedButton.classList.contains('my-polygon');
   buttons.forEach(button => {
     button.classList.remove('selected');
   });
@@ -66,6 +70,30 @@ function handleOnClickUnique(clickedButton) {
   if ((isErase && isSelected) || (!isErase)) {
     deactivateEraseTool();
   }
+  if (isRect && !isSelected) {
+    activateRectTool();
+  }
+  if ((isRect && isSelected) || (!isRect)) {
+    deactivateRectTool();
+  }
+  if (isCircle && !isSelected) {
+    activateCircleTool();
+  }
+  if (isCircle && isSelected || (!isCircle)) {
+    deactivateCircleTool();
+  }
+  // if (isText && !isSelected) {
+  //   activateTextTool();
+  // }
+  // if (isText && isSelected) {
+  //   deactivateTextTool();
+  // }
+  // if (isPolygon && !isSelected) {
+  //   activatePolygonTool();
+  // }
+  // if (isPolygon && isSelected || (!isPolygon)) {
+  //   deactivatePolygonTool();
+  // }
 }
 
 if (typeof mousedownHandler === 'undefined') {
@@ -211,3 +239,115 @@ function deactivateEraseTool() {
   canvas.removeEventListener('mouseup', eraseupHandler);
   canvas.removeEventListener('mousemove', erasemoveHandler);
 }
+
+if (typeof rectdownHandler === 'undefined') {
+  var rectdownHandler;
+}
+if (typeof rectmoveHandler === 'undefined') {
+  var rectmoveHandler;
+}
+if (typeof rectupHandler === 'undefined') {
+  var rectupHandler;
+}
+
+function activateRectTool() {
+  const canvas = document.getElementById('my-canvas');
+  const ctx = canvas.getContext('2d');
+  let startX;
+  let startY;
+  let isDrawing = false;
+
+  rectdownHandler = (e) => {
+    isDrawing = true;
+    startX = e.clientX;
+    startY = e.clientY;
+  };
+
+  rectmoveHandler = (e) => {
+    if (isDrawing) {
+      // drawRect(ctx, startX, startY, e.clientX, e.clientY);
+    }
+  };
+
+  rectupHandler = (e) => {
+    if (isDrawing) {
+      drawRect(ctx, startX, startY, e.clientX, e.clientY);
+      isDrawing = false;
+    }
+  };
+  canvas.addEventListener('mousedown', rectdownHandler);
+  canvas.addEventListener('mouseup', rectupHandler);
+  canvas.addEventListener('mousemove', rectmoveHandler);
+}
+
+function deactivateRectTool() {
+  const canvas = document.getElementById('my-canvas');
+  canvas.removeEventListener('mousedown', rectdownHandler);
+  canvas.removeEventListener('mouseup', rectupHandler);
+  canvas.removeEventListener('mousemove', rectmoveHandler);
+  // console.log('deactivateRectTool');
+}
+
+function drawRect(ctx, x1, y1, x2, y2) {
+  const canvas = document.getElementById('my-canvas');
+  ctx.beginPath();
+  ctx.rect(x1, y1, x2 - x1, y2 - y1);
+  ctx.stroke();
+}
+
+if (typeof circledownHandler === 'undefined') {
+  var circledownHandler;
+}
+if (typeof circlemoveHandler === 'undefined') {
+  var circlemoveHandler;
+}
+if (typeof circleupHandler === 'undefined') {
+  var circleupHandler;
+}
+
+function activateCircleTool() {
+  const canvas = document.getElementById('my-canvas');
+  const ctx = canvas.getContext('2d');
+  let startX;
+  let startY;
+  let isDrawing = false;
+
+  circledownHandler = (e) => {
+    isDrawing = true;
+    startX = e.clientX;
+    startY = e.clientY;
+  };
+
+  circlemoveHandler = (e) => {
+    if (isDrawing) {
+      // drawCircle(canvas,ctx, startX, startY, e.clientX, e.clientY);
+    }
+  };
+
+  circleupHandler = (e) => {
+    if (isDrawing) {
+      drawCircle(canvas,ctx, startX, startY, e.clientX, e.clientY);
+      isDrawing = false;
+    }
+  };
+  canvas.addEventListener('mousedown', circledownHandler);
+  canvas.addEventListener('mouseup', circleupHandler);
+  canvas.addEventListener('mousemove', circlemoveHandler);
+}
+
+function deactivateCircleTool() {
+  const canvas = document.getElementById('my-canvas');
+  canvas.removeEventListener('mousedown', circledownHandler);
+  canvas.removeEventListener('mouseup', circleupHandler);
+  canvas.removeEventListener('mousemove', circlemoveHandler);
+  // console.log('deactivateCircleTool');
+}
+
+function drawCircle(canvas,ctx, x1, y1, x2, y2) {
+  ctx.beginPath();
+  let radius = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
+  ctx.stroke();
+}
+
+
