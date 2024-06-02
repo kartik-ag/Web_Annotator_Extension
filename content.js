@@ -75,11 +75,18 @@ fetch(chrome.runtime.getURL('dialog.html'))
       oldScript.parentNode.removeChild(oldScript);
     }
 
+    let oldScript2 = document.querySelector('script[src="' + chrome.runtime.getURL('others.js') + '"]');
+    if (oldScript2) {
+      oldScript2.parentNode.removeChild(oldScript2);
+    }
+
     // Load the new dialog JS
     const script = document.createElement('script');
     script.src = chrome.runtime.getURL('dialog.js');
+    const script2 = document.createElement('script');
+    script2.src = chrome.runtime.getURL('others.js');
     document.body.appendChild(script);
-
+    document.body.appendChild(script2);
     //create a canvas element
     const canvas = document.createElement('canvas');
     canvas.id = 'my-canvas';
