@@ -99,11 +99,14 @@ fetch(chrome.runtime.getURL('dialog.html'))
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
       });
+
+    document.body.style.position = 'fixed';
     } else {
       // If the dialog is already present, remove it
       const dialog = document.getElementById('my-dialog');
       dialog.innerHTML = "";
       dialog.parentNode.removeChild(dialog);
       document.getElementById('my-canvas').remove();
+      document.body.style.position = '';
     }
   

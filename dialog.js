@@ -45,9 +45,11 @@ function handleOnClickUnique(clickedButton) {
   }
   if (isArrow && !isSelected) {
     document.getElementById('my-canvas').style.display = 'none';
+    document.body.style.position = '';
   }
   if (isArrow && isSelected) {
     document.getElementById('my-canvas').style.display = 'block';
+    document.body.style.position = 'fixed';
   }
   if (isLine && !isSelected) {
     activateLineTool();
@@ -207,7 +209,7 @@ function activateEraseTool() {
   
   erasedownHandler = (e) => {
     isDrawing = true;
-    ctx.lineWidth = 20;
+    ctx.lineWidth = 50;
     startX = e.clientX;
     startY = e.clientY;
     ctx.globalCompositeOperation = 'destination-out';
@@ -345,7 +347,7 @@ function deactivateCircleTool() {
 
 function drawCircle(canvas,ctx, x1, y1, x2, y2) {
   ctx.beginPath();
-  let radius = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  let radius = Math.sqrt(Math.pow((x2 - x1)/2, 2) + Math.pow((y2 - y1)/2, 2));
   ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
   ctx.stroke();
 }
