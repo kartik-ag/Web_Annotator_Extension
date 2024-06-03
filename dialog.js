@@ -35,6 +35,7 @@ function handleOnClickUnique(clickedButton) {
   const isCircle = clickedButton.classList.contains('my-circle');
   const isText = clickedButton.classList.contains('my-text');
   const isPolygon = clickedButton.classList.contains('my-polygon');
+  const isHighlight = clickedButton.classList.contains('my-highlight');
   buttons.forEach(button => {
     button.classList.remove('selected');
   });
@@ -47,7 +48,7 @@ function handleOnClickUnique(clickedButton) {
     document.getElementById('my-canvas').style.display = 'none';
     document.body.style.position = '';
   }
-  if (isArrow && isSelected) {
+  if ((isArrow && isSelected) || (!isArrow)) {
     document.getElementById('my-canvas').style.display = 'block';
     document.body.style.position = 'fixed';
   }
@@ -84,18 +85,18 @@ function handleOnClickUnique(clickedButton) {
   if (isCircle && isSelected || (!isCircle)) {
     deactivateCircleTool();
   }
-  // if (isText && !isSelected) {
-  //   activateTextTool();
-  // }
-  // if (isText && isSelected) {
-  //   deactivateTextTool();
-  // }
-  // if (isPolygon && !isSelected) {
-  //   activatePolygonTool();
-  // }
-  // if (isPolygon && isSelected || (!isPolygon)) {
-  //   deactivatePolygonTool();
-  // }
+  if (isText && !isSelected) {
+    activateTextTool();
+  }
+  if ((isText && isSelected) || (!isText)) {
+      deactivateTextTool();
+  }
+  if (isHighlight && !isSelected) {
+      activateHighlightTool();
+  }
+  if ((isHighlight && isSelected) || (!isHighlight)) {
+      deactivateHighlightTool();
+  }
 }
 
 if (typeof mousedownHandler === 'undefined') {
@@ -350,6 +351,99 @@ function drawCircle(canvas,ctx, x1, y1, x2, y2) {
   let radius = Math.sqrt(Math.pow((x2 - x1)/2, 2) + Math.pow((y2 - y1)/2, 2));
   ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
   ctx.stroke();
+}
+
+if (typeof handleTextClick === 'undefined') {
+  var handleTextClick;
+}
+
+
+function activateTextTool() {
+  handleTextClick = (e) => {
+      console.log('Text clicked', e);
+      const text = document.createElement('div');
+      text.style.position = 'absolute';
+      text.style.top = e.clientY + 'px';
+      text.style.left = e.clientX + 'px';
+      text.style.color = 'red';
+      text.style.fontSize = '24px';
+      //take input from user using a prompt
+      var content = prompt('Enter your notes here:');
+      if (content == null){
+          return;
+      }
+      text.textContent = content;
+      document.body.appendChild(text);
+      console.log('Text added');
+  }
+  document.body.addEventListener('dblclick', handleTextClick);
+}
+
+function deactivateTextTool() {
+  document.body.removeEventListener('dblclick', handleTextClick);
+}
+
+
+
+
+if (typeof highlightupHandler === 'undefined') {
+  var highlightupHandler;
+}
+if (typeof highlightdownHandler === 'undefined') {
+  var highlightdownHandler;
+}
+if (typeof highlightmoveHandler === 'undefined') {
+  var highlightmoveHandler;
+}
+
+function activateHighlightTool() {
+  const canvas = document.getElementById('my-canvas');
+  canvas.style.display = 'none';
+  let isMouseDown = false;
+  let selectedText = '';
+  highlightdownHandler = (e) => {
+    isMouseDown = true;
+  };
+
+  highlightmoveHandler = (e) => {
+    if (isMouseDown) {
+      if (window.getSelection) {
+        selectedText = window.getSelection().toString();
+      } else if (document.selection && document.selection.type !== 'Control') {
+        selectedText = document.selection.createRange().text;
+      }
+    }
+  };
+
+  highlightupHandler = (e) => {
+    isMouseDown = false;
+    if (selectedText) {
+      let selection = window.getSelection();
+      if (selection.rangeCount) {
+        let range = selection.getRangeAt(0);
+        let span = document.createElement('span');
+        span.style.backgroundColor = 'yellow';
+        try {
+          range.surroundContents(span);
+        } catch (e) {
+          console.error('Could not surround range: ' + e.message);
+          alert('Please select text only and within the same paragraph');
+        }
+      }
+    }
+  };
+  document.body.addEventListener('mousedown', highlightdownHandler);
+  document.body.addEventListener('mouseup', highlightupHandler);
+  document.body.addEventListener('mousemove', highlightmoveHandler);
+}
+
+
+function deactivateHighlightTool() {
+  const canvas = document.getElementById('my-canvas');
+  canvas.style.display = 'block';
+  document.body.removeEventListener('mousedown', highlightdownHandler);
+  document.body.removeEventListener('mouseup', highlightupHandler);
+  document.body.removeEventListener('mousemove', highlightmoveHandler);
 }
 
 
