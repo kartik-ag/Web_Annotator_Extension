@@ -1,17 +1,55 @@
 document.addEventListener('DOMContentLoaded', function() {
   setupSliders();
   setupButtonHandlers();
+  setupColorInput();
 });
 
-function setupSliders() {
-  let sliders = document.querySelectorAll('.unique-slider-input');
-  sliders.forEach((slider) => {
-    slider.addEventListener('input', (e) => {
-      let value = slider.parentElement.querySelector('.unique-value');
-      value.textContent = e.target.value + '%';
-    });
+// Create a global variable to store the slider value
+if (typeof sliderValue === 'undefined') {
+  var sliderValue;
+}
+function setupSlider() {
+  let slider = document.querySelector('.unique-slider-input');
+  let valueElement = document.querySelector('.unique-value');
+
+  // Update the global variable with the initial value of the slider
+  sliderValue = slider.value;
+  sliderValue = sliderValue/10;
+  slider.addEventListener('input', (e) => {
+    valueElement.textContent = e.target.value + '%';
+
+    // Update the global variable with the new value of the slider
+    sliderValue = e.target.value/10;
+    console.log(sliderValue);
   });
 }
+
+
+
+// Call the function to setup the slider
+setupSlider();
+
+
+// Create a global variable to store the color
+if (typeof colorValue === 'undefined') {
+  var colorValue;
+}
+
+function setupColorInput() {
+  let colorInput = document.querySelector('.unique-color-picker-input');
+
+  // Update the global variable with the initial value of the color input
+  colorValue = colorInput.value;
+
+  colorInput.addEventListener('input', (e) => {
+    // Update the global variable with the new value of the color input
+    colorValue = e.target.value;
+    console.log(colorValue);
+  });
+}
+
+// Call the function to setup the color input
+setupColorInput();
 
 function setupButtonHandlers() {
   const buttons = document.querySelectorAll('.my-unique-button');
@@ -113,7 +151,8 @@ function activateLineTool() {
   let startX;
   let startY;
   let isDrawing = false;
-
+  ctx.linewidth = sliderValue;
+  ctx.strokeStyle = colorValue;
   mousedownHandler = (e) => {
     isDrawing = true;
     startX = e.clientX;
@@ -123,6 +162,8 @@ function activateLineTool() {
 
   mouseupHandler = (e) => {
     if (isDrawing) {
+      ctx.lineWidth = sliderValue;
+      ctx.strokeStyle = colorValue;
       drawLine(ctx, startX, startY, e.clientX, e.clientY);
       isDrawing = false;
       canvas.style.cursor = 'default';
@@ -153,7 +194,8 @@ function activatePenTool() {
   let startX;
   let startY;
   let isDrawing = false;
-
+  ctx.linewidth = sliderValue;
+  ctx.strokeStyle = colorValue;
   PendownHandler = (e) => {
     isDrawing = true;
     startX = e.clientX;
@@ -162,6 +204,8 @@ function activatePenTool() {
 
   PenmoveHandler = (e) => {
     if (isDrawing) {
+      ctx.lineWidth = sliderValue;
+      ctx.strokeStyle = colorValue;
       drawLine(ctx, startX, startY, e.clientX, e.clientY);
       startX = e.clientX;
       startY = e.clientY;
@@ -210,14 +254,14 @@ function activateEraseTool() {
   
   erasedownHandler = (e) => {
     isDrawing = true;
-    ctx.lineWidth = 50;
     startX = e.clientX;
     startY = e.clientY;
     ctx.globalCompositeOperation = 'destination-out';
   };
-
+  
   erasemoveHandler = (e) => {
     if (isDrawing) {
+      ctx.lineWidth = sliderValue*5;
       drawLine(ctx, startX, startY, e.clientX, e.clientY);
       startX = e.clientX;
       startY = e.clientY;
@@ -227,7 +271,6 @@ function activateEraseTool() {
   eraseupHandler = (e) => {
     if (isDrawing) {
       isDrawing = false;
-      ctx.lineWidth = 1;
       ctx.globalCompositeOperation = 'source-over';
     }
   };
@@ -274,6 +317,8 @@ function activateRectTool() {
 
   rectupHandler = (e) => {
     if (isDrawing) {
+      ctx.lineWidth = sliderValue;
+      ctx.strokeStyle = colorValue;
       drawRect(ctx, startX, startY, e.clientX, e.clientY);
       isDrawing = false;
     }
@@ -329,6 +374,8 @@ function activateCircleTool() {
 
   circleupHandler = (e) => {
     if (isDrawing) {
+      ctx.lineWidth = sliderValue;
+      ctx.strokeStyle = colorValue;
       drawCircle(canvas,ctx, startX, startY, e.clientX, e.clientY);
       isDrawing = false;
     }
@@ -365,7 +412,7 @@ function activateTextTool() {
       text.style.position = 'absolute';
       text.style.top = e.clientY + 'px';
       text.style.left = e.clientX + 'px';
-      text.style.color = 'red';
+      text.style.color = colorValue;
       text.style.fontSize = '24px';
       //take input from user using a prompt
       var content = prompt('Enter your notes here:');
@@ -422,7 +469,7 @@ function activateHighlightTool() {
       if (selection.rangeCount) {
         let range = selection.getRangeAt(0);
         let span = document.createElement('span');
-        span.style.backgroundColor = 'yellow';
+        span.style.backgroundColor = colorValue;
         try {
           range.surroundContents(span);
         } catch (e) {

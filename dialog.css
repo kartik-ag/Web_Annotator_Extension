@@ -79,6 +79,9 @@
   background-color: #ddd;
   border: 1px solid #ccc;
   margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .unique-toolbox-content .unique-slider {
@@ -146,4 +149,14 @@
 
 .selected{
   background-color: black;
+}
+
+.unique-color-picker-input{
+  border: none;
+  background: #f0f0f0;
+}
+
+.unique-color-picker-heading{
+  align-content: center;
+  font-size: 15px;
 }
