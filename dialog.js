@@ -518,4 +518,15 @@ function deactivateHighlightTool() {
   document.body.removeEventListener('mousemove', highlightmoveHandler);
 }
 
+function screenshooter(){
+  //use html2canvass to take a screenshot
+  html2canvas(document.body).then(function(canvas) {
+    var img = canvas.toDataURL("image/png");
+    var a = document.createElement('a');
+    a.href = img;
+    a.download = 'screenshot.png';
+    a.click();
+  });
+}
+
 

@@ -87,6 +87,11 @@ fetch(chrome.runtime.getURL('dialog.html'))
     script2.src = chrome.runtime.getURL('others.js');
     document.body.appendChild(script);
     document.body.appendChild(script2);
+    if (typeof script3 === 'undefined'){
+      var script3 = document.createElement('script');
+      script3.src = chrome.runtime.getURL('html2canvas.min.js');
+      document.body.appendChild(script3);
+    }
     //create a canvas element
     const canvas = document.createElement('canvas');
     canvas.id = 'my-canvas';
