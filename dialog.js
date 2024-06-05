@@ -378,14 +378,15 @@ if (typeof circleupHandler === 'undefined') {
 function activateCircleTool() {
   const canvas = document.getElementById('my-canvas');
   const ctx = canvas.getContext('2d');
+  const rect = canvas.getBoundingClientRect();
   let startX;
   let startY;
   let isDrawing = false;
 
   circledownHandler = (e) => {
     isDrawing = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    startX = e.clientX - rect.left;
+    startY = e.clientY - rect.top;
   };
 
   circlemoveHandler = (e) => {
@@ -398,7 +399,9 @@ function activateCircleTool() {
     if (isDrawing) {
       ctx.lineWidth = sliderValue;
       ctx.strokeStyle = colorValue;
-      drawCircle(canvas,ctx, startX, startY, e.clientX, e.clientY);
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      drawCircle(canvas,ctx, startX, startY, x, y);
       isDrawing = false;
     }
   };
@@ -417,7 +420,7 @@ function deactivateCircleTool() {
 
 function drawCircle(canvas,ctx, x1, y1, x2, y2) {
   ctx.beginPath();
-  let radius = Math.sqrt(Math.pow((x2 - x1)/2, 2) + Math.pow((y2 - y1)/2, 2));
+  let radius = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
   ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
   ctx.stroke();
 }
