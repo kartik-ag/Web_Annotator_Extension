@@ -467,6 +467,9 @@ if (typeof highlightdownHandler === 'undefined') {
 if (typeof highlightmoveHandler === 'undefined') {
   var highlightmoveHandler;
 }
+if (typeof ranges === 'undefined') {
+  var ranges = [];
+}
 
 function activateHighlightTool() {
   const canvas = document.getElementById('my-canvas');
@@ -497,6 +500,7 @@ function activateHighlightTool() {
         span.style.backgroundColor = colorValue;
         try {
           range.surroundContents(span);
+          ranges.push({range: range, span: span}); // Store the range and the created span
         } catch (e) {
           console.error('Could not surround range: ' + e.message);
           alert('Please select text only and within the same paragraph');
@@ -527,6 +531,24 @@ function screenshooter(){
     a.download = 'screenshot.png';
     a.click();
   });
+}
+
+function deleteall(){
+  //delete all the elements on the screen
+  const canvas = document.getElementById('my-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  removeAllHighlights();
+}
+
+function removeAllHighlights() {
+  for (let {range, span} of ranges) {
+    while (span.firstChild) {
+      range.insertNode(span.firstChild); // Moves the content out of the span
+    }
+    span.parentNode.removeChild(span); // Removes the empty span
+  }
+  ranges = []; // Clear the ranges array
 }
 
 
