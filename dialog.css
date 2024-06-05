@@ -78,6 +78,7 @@
   height: 30px;
   background-color: #ddd;
   border: 1px solid #ccc;
+  border-radius: 4px;
   margin: 5px;
   display: flex;
   flex-direction: row;
@@ -159,4 +160,26 @@
 .unique-color-picker-heading{
   align-content: center;
   font-size: 15px;
+}
+
+#text-size-input{
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+
+.unique-text{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.unique-text-heading{
+  align-content: center;
 }

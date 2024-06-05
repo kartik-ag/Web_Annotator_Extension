@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setupSliders();
   setupButtonHandlers();
   setupColorInput();
+  setupTextSizeInput();
 });
 
 // Create a global variable to store the slider value
@@ -50,6 +51,27 @@ function setupColorInput() {
 
 // Call the function to setup the color input
 setupColorInput();
+
+// Create a global variable to store the text size
+if (typeof textSize === 'undefined') {
+  var textSize;
+}
+
+function setupTextSizeInput() {
+  let textSizeInput = document.getElementById('text-size-input');
+  console.log(textSizeInput);
+  // Update the global variable with the initial value of the text size input
+  textSize = textSizeInput.value;
+
+  textSizeInput.addEventListener('change', (e) => {
+    // Update the global variable with the new value of the text size input
+    textSize = e.target.value;
+    console.log(textSize);
+  });
+}
+
+// Call the function to setup the text size input
+setupTextSizeInput();
 
 function setupButtonHandlers() {
   const buttons = document.querySelectorAll('.my-unique-button');
@@ -413,7 +435,7 @@ function activateTextTool() {
       text.style.top = e.clientY + 'px';
       text.style.left = e.clientX + 'px';
       text.style.color = colorValue;
-      text.style.fontSize = '24px';
+      text.style.fontSize = textSize + 'px';
       //take input from user using a prompt
       var content = prompt('Enter your notes here:');
       if (content == null){
