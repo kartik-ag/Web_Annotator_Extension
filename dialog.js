@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
   setupTextSizeInput();
 });
 
+if(typeof actions == 'undefined'){
+  var actions = [];
+}
+
 // Create a global variable to store the slider value
 if (typeof sliderValue === 'undefined') {
   var sliderValue;
@@ -55,6 +59,10 @@ setupColorInput();
 // Create a global variable to store the text size
 if (typeof textSize === 'undefined') {
   var textSize;
+}
+
+if (typeof Texts == 'undefined') {
+  var Texts = [];
 }
 
 function setupTextSizeInput() {
@@ -186,6 +194,15 @@ function activateLineTool() {
     if (isDrawing) {
       ctx.lineWidth = sliderValue;
       ctx.strokeStyle = colorValue;
+      actions.push({
+        type: 'line',
+        startX: startX,
+        startY: startY,
+        endX: e.clientX,
+        endY: e.clientY,
+        color: ctx.strokeStyle,
+        lineWidth: ctx.lineWidth
+      });
       drawLine(ctx, startX, startY, e.clientX, e.clientY);
       isDrawing = false;
       canvas.style.cursor = 'default';
@@ -228,7 +245,7 @@ function activatePenTool() {
     if (isDrawing) {
       ctx.lineWidth = sliderValue;
       ctx.strokeStyle = colorValue;
-      drawLine(ctx, startX, startY, e.clientX, e.clientY);
+      drawPen(ctx, startX, startY, e.clientX, e.clientY);
       startX = e.clientX;
       startY = e.clientY;
     }
@@ -256,8 +273,16 @@ function drawLine(ctx, x1, y1, x2, y2) {
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
   ctx.stroke();
-}
 
+  
+  console.log(actions);
+}
+function drawPen(ctx, x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+}
 if (typeof eraseupHandler === 'undefined') {
   var eraseupHandler;
 }
@@ -284,7 +309,7 @@ function activateEraseTool() {
   erasemoveHandler = (e) => {
     if (isDrawing) {
       ctx.lineWidth = sliderValue*5;
-      drawLine(ctx, startX, startY, e.clientX, e.clientY);
+      drawErase(ctx, startX, startY, e.clientX, e.clientY);
       startX = e.clientX;
       startY = e.clientY;
     }
@@ -299,6 +324,12 @@ function activateEraseTool() {
   canvas.addEventListener('mousedown', erasedownHandler);
   canvas.addEventListener('mouseup', eraseupHandler);
   canvas.addEventListener('mousemove', erasemoveHandler);
+}
+function drawErase(ctx, x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
 }
 
 function deactivateEraseTool() {
@@ -341,6 +372,15 @@ function activateRectTool() {
     if (isDrawing) {
       ctx.lineWidth = sliderValue;
       ctx.strokeStyle = colorValue;
+      actions.push({
+        type: 'rect',
+        startX: startX,
+        startY: startY,
+        endX: e.clientX,
+        endY: e.clientY,
+        color: ctx.strokeStyle,
+        lineWidth: ctx.lineWidth
+      });
       drawRect(ctx, startX, startY, e.clientX, e.clientY);
       isDrawing = false;
     }
@@ -363,6 +403,9 @@ function drawRect(ctx, x1, y1, x2, y2) {
   ctx.beginPath();
   ctx.rect(x1, y1, x2 - x1, y2 - y1);
   ctx.stroke();
+
+  
+  console.log(actions);
 }
 
 if (typeof circledownHandler === 'undefined') {
@@ -401,6 +444,15 @@ function activateCircleTool() {
       ctx.strokeStyle = colorValue;
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
+      actions.push({
+        type: 'circle',
+        startX: startX,
+        startY: startY,
+        endX: x,
+        endY: y,
+        color: ctx.strokeStyle,
+        lineWidth: ctx.lineWidth
+      });
       drawCircle(canvas,ctx, startX, startY, x, y);
       isDrawing = false;
     }
@@ -423,6 +475,9 @@ function drawCircle(canvas,ctx, x1, y1, x2, y2) {
   let radius = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
   ctx.arc(x1, y1, radius, 0, 2 * Math.PI);
   ctx.stroke();
+
+  
+  console.log(actions);
 }
 
 if (typeof handleTextClick === 'undefined') {
@@ -446,6 +501,16 @@ function activateTextTool() {
       }
       text.textContent = content;
       document.body.appendChild(text);
+      actions.push({
+        type: 'text',
+        content: content,
+        x: e.clientX,
+        y: e.clientY,
+        color: colorValue,
+        size: textSize
+      });
+      Texts.push(text);
+      console.log(Texts);
       console.log('Text added');
   }
   document.body.addEventListener('dblclick', handleTextClick);
@@ -539,6 +604,7 @@ function deleteall(){
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   removeAllHighlights();
+  actions = [];
 }
 
 function removeAllHighlights() {
