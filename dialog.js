@@ -590,10 +590,12 @@ function activateHighlightTool() {
       if (selection.rangeCount) {
         let range = selection.getRangeAt(0);
         // Check if the selection spans across multiple paragraphs
-        if (range.startContainer.parentElement !== range.endContainer.parentElement) {
-          alert('Please select text within the same paragraph');
-          return;
-        }
+        if (range.startContainer.nodeType === Node.TEXT_NODE && 
+          range.endContainer.nodeType === Node.TEXT_NODE &&
+          range.startContainer.parentElement !== range.endContainer.parentElement) {
+        alert('Please select text within the same paragraph');
+        return;
+      }
         let span = document.createElement('span');
         span.style.backgroundColor = colorValue;
         try {
