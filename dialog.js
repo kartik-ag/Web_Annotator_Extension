@@ -186,6 +186,8 @@ function handleOnClickUnique(clickedButton) {
   }
   if (isHighlight && !isSelected) {
     activateHighlightTool();
+    document.getElementById('my-canvas').style.visibility = 'hidden';
+    document.body.style.overflow = 'visible';
   }
   if ((isHighlight && isSelected) || (!isHighlight)) {
     deactivateHighlightTool();
@@ -587,10 +589,17 @@ function activateHighlightTool() {
       let selection = window.getSelection();
       if (selection.rangeCount) {
         let range = selection.getRangeAt(0);
+        // Check if the selection spans across multiple paragraphs
+        if (range.startContainer.parentElement !== range.endContainer.parentElement) {
+          alert('Please select text within the same paragraph');
+          return;
+        }
         let span = document.createElement('span');
         span.style.backgroundColor = colorValue;
         try {
-          range.surroundContents(span);
+          let content = range.extractContents();
+          span.appendChild(content);
+          range.insertNode(span);
           ranges.push({range: range, span: span}); // Store the range and the created span
         } catch (e) {
           console.error('Could not surround range: ' + e.message);
