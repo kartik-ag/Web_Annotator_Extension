@@ -601,8 +601,53 @@ function activateHighlightTool() {
         try {
           let content = range.extractContents();
           span.appendChild(content);
+          let div = document.createElement('div');
+          div.contentEditable = 'true';
+          div.style.display = 'none'; // Hide the div by default
+          div.style.position = 'absolute'; // Position the div absolutely
+          div.style.zIndex = '1000'; // Set the z-index to ensure it's above other elements
+          div.style.width = '400px'; // Set the width of the div to cover the whole area
+          div.style.height = 'auto'; // Set the height of the div to cover the whole area
+          div.style.fontSize = textSize + 'px'; // Set the font size of the div
+          div.style.color = colorValue; // Set the text color of the div
+          div.style.backgroundColor = 'white'; // Set the background color of the div
+          div.style.border = '1px solid black'; // Set the border of the div
+          div.style.borderRadius = '5px'; // Set the border radius of the div
+          div.style.padding = '5px'; // Set the padding of the div
+          div.style.boxSizing = 'border-box'; // Include padding and border in the element's total width and height
+          // let button = document.createElement('button');
+          // button.textContent = 'Save note';
+          // button.style.display = 'none'; // Hide the button by default
+          // button.style.position = 'absolute'; // Position the button absolutely
+          // button.style.zIndex = '1000'; // Set the z-index to ensure it's above other elements
+          // button.addEventListener('click', () => {
+          //   ranges.push({range: range, span: span, note: input.value}); // Store the range, the created span, and the note
+          //   input.style.display = 'none';
+          //   button.style.display = 'none';
+          // });
+          span.style.position = 'relative'; // Position the span relatively
+          span.appendChild(div);
+          // span.appendChild(button);
           range.insertNode(span);
-          ranges.push({range: range, span: span}); // Store the range and the created span
+          // Show the input field and the button when the user clicks or hovers over the span
+          // span.addEventListener('mouseover', () => {
+          //   div.style.display = 'block';
+          // });
+          // span.addEventListener('mouseout', () => {
+          //   div.style.display = 'none';
+          // });
+          let displaybox = false;
+          span.addEventListener('dblclick', () => {
+            if (displaybox){
+              div.style.display = 'none';
+              displaybox = false;
+              // button.style.display = 'none';
+            }else{
+              div.style.display = 'block';
+              displaybox = true;
+            // button.style.display = 'block';
+            }
+          });
         } catch (e) {
           console.error('Could not surround range: ' + e.message);
           alert('Please select text only and within the same paragraph');
