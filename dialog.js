@@ -1,9 +1,18 @@
-document.addEventListener('DOMContentLoaded', function() {
-  setupSliders();
-  setupButtonHandlers();
-  setupColorInput();
-  setupTextSizeInput();
-});
+setTimeout(() => {
+  document.getElementById('unique-exit').addEventListener('click', function() {
+    escape();
+  });
+  
+  document.getElementById('unique-screenshot').addEventListener('click', function() {
+    screenshooter();
+  });
+  
+  document.getElementById('unique-delete').addEventListener('click', function() {
+    deleteall();
+  });
+}, 1000);
+
+
 
 if(typeof actions == 'undefined'){
   var actions = [];
@@ -30,9 +39,15 @@ function setupSlider() {
 }
 
 
+setupSlider();
+  setupButtonHandlers();
+setupColorInput();
+
+setupTextSizeInput();
+
 
 // Call the function to setup the slider
-setupSlider();
+// setupSlider();
 
 
 // Create a global variable to store the color
@@ -54,7 +69,7 @@ function setupColorInput() {
 }
 
 // Call the function to setup the color input
-setupColorInput();
+// setupColorInput();
 
 // Create a global variable to store the text size
 if (typeof textSize === 'undefined') {
@@ -79,20 +94,28 @@ function setupTextSizeInput() {
 }
 
 // Call the function to setup the text size input
-setupTextSizeInput();
+// setupTextSizeInput();
 
 function setupButtonHandlers() {
   const buttons = document.querySelectorAll('.my-unique-button');
 
   // Add click event listener to each button
-  buttons.forEach(button => {
+  buttons.forEach((button, index) => {
+    button.setAttribute('data-unique-id', index);
     button.addEventListener('click', function() {
+      console.log('Button clicked', button, 'ID:', index);
       handleOnClickUnique(button);
     });
   });
 }
 
+// setupButtonHandlers();
+
+
+
 function handleOnClickUnique(clickedButton) {
+
+
   const buttons = document.querySelectorAll('.my-unique-button');
   const isSelected = clickedButton.classList.contains('selected');
   const isArrow = clickedButton.classList.contains('my-arrow');
@@ -102,23 +125,25 @@ function handleOnClickUnique(clickedButton) {
   const isRect = clickedButton.classList.contains('my-rect');
   const isCircle = clickedButton.classList.contains('my-circle');
   const isText = clickedButton.classList.contains('my-text');
-  const isPolygon = clickedButton.classList.contains('my-polygon');
   const isHighlight = clickedButton.classList.contains('my-highlight');
+
   buttons.forEach(button => {
     button.classList.remove('selected');
   });
+
   if (!isSelected) {
     clickedButton.classList.add('selected');
   } else {
     clickedButton.classList.remove('selected');
   }
+
   if (isArrow && !isSelected) {
-    document.getElementById('my-canvas').style.display = 'none';
-    document.body.style.position = '';
+    document.getElementById('my-canvas').style.visibility = 'hidden';
+    document.body.style.overflow = 'visible';
   }
   if ((isArrow && isSelected) || (!isArrow)) {
-    document.getElementById('my-canvas').style.display = 'block';
-    document.body.style.position = 'fixed';
+    document.getElementById('my-canvas').style.visibility = 'visible';
+    document.body.style.overflow = 'hidden';
   }
   if (isLine && !isSelected) {
     activateLineTool();
@@ -157,15 +182,16 @@ function handleOnClickUnique(clickedButton) {
     activateTextTool();
   }
   if ((isText && isSelected) || (!isText)) {
-      deactivateTextTool();
+    deactivateTextTool();
   }
   if (isHighlight && !isSelected) {
-      activateHighlightTool();
+    activateHighlightTool();
   }
   if ((isHighlight && isSelected) || (!isHighlight)) {
-      deactivateHighlightTool();
+    deactivateHighlightTool();
   }
 }
+
 
 if (typeof mousedownHandler === 'undefined') {
   var mousedownHandler;
@@ -618,3 +644,9 @@ function removeAllHighlights() {
 }
 
 
+function escape(){
+  const dialog = document.getElementById('my-dialog');
+      dialog.remove();
+      document.getElementById('my-canvas').remove();
+      document.body.style.overflow = 'auto';
+}
